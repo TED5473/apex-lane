@@ -51,22 +51,28 @@ export default async function AccountPage({ searchParams }: Props) {
       <div className="mt-10 rounded-2xl border border-line bg-panel p-7">
         <p className="text-sm text-mute">Status</p>
         <p className="mt-2 font-display text-3xl text-paper">
-          {member ? "Active member (demo)" : "Free reader"}
+          {member ? "Active member (demo)" : "Free · 3-trim compare"}
         </p>
         <p className="mt-3 text-sm leading-relaxed text-mute">
           {member
-            ? "You can read past the paywall on all briefings. Cookie apex_member=1 or ?member=1."
-            : "You see free ledes. Upgrade on Pricing, or use demo membership for local preview."}
+            ? "Unlimited compare + CSV export unlocked. Cookie apex_member=1 or ?member=1."
+            : "Free compare works without paying. Membership adds unlimited board + CSV. Demo cookie available for local preview."}
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
           {!member ? (
             <>
               <Link
-                href="/pricing"
-                className="rounded-full bg-brass px-5 py-2.5 text-sm font-medium text-ink hover:bg-brass-bright"
+                href="/compare"
+                className="rounded-full bg-paper px-5 py-2.5 text-sm font-medium text-ink hover:bg-brass-bright"
               >
-                View pricing
+                Open compare
+              </Link>
+              <Link
+                href="/pricing"
+                className="rounded-full border border-line px-5 py-2.5 text-sm text-mute hover:text-paper"
+              >
+                Membership
               </Link>
               <Link
                 href="/api/member-demo?on=1&next=/account"

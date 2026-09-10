@@ -1,0 +1,325 @@
+{
+  "month": "2026-09",
+  "vehicles": [
+    {
+      "id": "tesla-model-3-rear-wheel-drive",
+      "month": "2026-09",
+      "brand": "Tesla",
+      "model": "Model 3",
+      "trim": "Rear-Wheel Drive",
+      "msrp_rmb": 235500,
+      "msrp_usd_approx": 34735,
+      "battery_kwh": "62.5",
+      "range_km": "634",
+      "drive": "RWD",
+      "adas": "Autopilot (HW4 as marketed)",
+      "source_url": "https://www.163.com/dy/article/L690SJMU055692EN.html",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Guide price unchanged; Sep 7–30 inventory cash incentive −5000 RMB (delivery by Sep 30); stackable 8000 RMB insurance subsidy on non-Performance → effective from ~222500 RMB",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ]
+    },
+    {
+      "id": "tesla-model-3-long-range-rear-wheel-drive",
+      "month": "2026-09",
+      "brand": "Tesla",
+      "model": "Model 3",
+      "trim": "Long Range Rear-Wheel Drive",
+      "msrp_rmb": 259500,
+      "msrp_usd_approx": 38274,
+      "battery_kwh": "78.4",
+      "range_km": "830",
+      "drive": "RWD",
+      "adas": "Autopilot (HW4 as marketed)",
+      "source_url": "https://www.163.com/dy/article/L690SJMU055692EN.html",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Guide price; Sep inventory cash incentive −5000 RMB; insurance subsidy eligible",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ]
+    },
+    {
+      "id": "tesla-model-y-rear-wheel-drive",
+      "month": "2026-09",
+      "brand": "Tesla",
+      "model": "Model Y",
+      "trim": "Rear-Wheel Drive",
+      "msrp_rmb": 263500,
+      "msrp_usd_approx": 38864,
+      "battery_kwh": "62.5",
+      "range_km": "593",
+      "drive": "RWD",
+      "adas": "Autopilot (HW4 as marketed)",
+      "source_url": "https://www.163.com/dy/article/L690SJMU055692EN.html",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Guide price unchanged; Sep 7–30 inventory cash incentive −10000 RMB → effective from ~253500 RMB",
+      "tags": [
+        "SUV",
+        "BEV"
+      ]
+    },
+    {
+      "id": "tesla-model-y-long-range-rear-wheel-drive",
+      "month": "2026-09",
+      "brand": "Tesla",
+      "model": "Model Y",
+      "trim": "Long Range Rear-Wheel Drive",
+      "msrp_rmb": 288500,
+      "msrp_usd_approx": 42552,
+      "battery_kwh": "78.4",
+      "range_km": "821",
+      "drive": "RWD",
+      "adas": "Autopilot (HW4 as marketed)",
+      "source_url": "https://www.163.com/dy/article/L690SJMU055692EN.html",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Guide price; Sep inventory cash incentive −10000 RMB",
+      "tags": [
+        "SUV",
+        "BEV"
+      ]
+    },
+    {
+      "id": "tesla-model-y-l-six-seat",
+      "month": "2026-09",
+      "brand": "Tesla",
+      "model": "Model Y L",
+      "trim": "Six-seat",
+      "msrp_rmb": 339000,
+      "msrp_usd_approx": 50000,
+      "battery_kwh": null,
+      "range_km": null,
+      "drive": null,
+      "adas": "Autopilot (HW4 as marketed)",
+      "source_url": "https://www.163.com/dy/article/L690SJMU055692EN.html",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Guide price; Sep inventory cash incentive −10000 RMB → ~329000 RMB effective",
+      "tags": [
+        "SUV",
+        "BEV"
+      ]
+    },
+    {
+      "id": "xiaomi-sky-nomad-n70-pro",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "Sky Nomad N70",
+      "trim": "Pro",
+      "msrp_rmb": 209900,
+      "msrp_usd_approx": 30959,
+      "battery_kwh": "52",
+      "range_km": "351 EV / 1351 combined",
+      "drive": "RWD (single motor; some English press say FWD — verify)",
+      "adas": "Xiaomi HAD (LiDAR + Nvidia Thor ~700 TOPS)",
+      "source_url": "https://cnevpost.com/2026/09/07/xiaomi-launches-sky-nomad-extended-range-suvs/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Official launch MSRP Sep 7 2026; first Xiaomi EREV SUV",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ]
+    },
+    {
+      "id": "xiaomi-sky-nomad-n70-max",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "Sky Nomad N70",
+      "trim": "Max",
+      "msrp_rmb": 239900,
+      "msrp_usd_approx": 35383,
+      "battery_kwh": "76",
+      "range_km": "505 EV / 1461 combined",
+      "drive": "AWD",
+      "adas": "Xiaomi HAD (LiDAR + Nvidia Thor ~700 TOPS)",
+      "source_url": "https://cnevpost.com/2026/09/07/xiaomi-launches-sky-nomad-extended-range-suvs/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Launch MSRP; 20000 RMB below Jul 30 pre-sale price",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ]
+    },
+    {
+      "id": "xiaomi-sky-nomad-n90-max-7-seat",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "Sky Nomad N90",
+      "trim": "Max (7-seat)",
+      "msrp_rmb": 269900,
+      "msrp_usd_approx": 39808,
+      "battery_kwh": "76",
+      "range_km": "464 EV / 1705 combined",
+      "drive": "AWD",
+      "adas": "Xiaomi HAD (dual LiDAR claimed on N90)",
+      "source_url": "https://cnevpost.com/2026/09/07/xiaomi-launches-sky-nomad-extended-range-suvs/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Launch MSRP; 30000 RMB below Jul 30 pre-sale price",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ]
+    },
+    {
+      "id": "xiaomi-sky-nomad-n90-max-explorer-edition",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "Sky Nomad N90",
+      "trim": "Max Explorer Edition",
+      "msrp_rmb": 299900,
+      "msrp_usd_approx": 44233,
+      "battery_kwh": "76",
+      "range_km": "462 EV / 1688 combined",
+      "drive": "AWD",
+      "adas": "Xiaomi HAD (dual LiDAR claimed)",
+      "source_url": "https://cnevpost.com/2026/09/07/xiaomi-launches-sky-nomad-extended-range-suvs/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Launch MSRP; factory pop-top camping edition",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ]
+    },
+    {
+      "id": "byd-qin-max-dm-i-230-km-leading",
+      "month": "2026-09",
+      "brand": "BYD",
+      "model": "Qin Max",
+      "trim": "DM-i 230 km Leading",
+      "msrp_rmb": 99900,
+      "msrp_usd_approx": 14735,
+      "battery_kwh": null,
+      "range_km": "230 EV (CLTC) / up to 2370 combined",
+      "drive": "FWD (PHEV)",
+      "adas": "God's Eye B LiDAR ADAS optional (+12000 RMB on certain trims)",
+      "source_url": "https://carnewschina.com/2026/08/14/byd-launches-qin-max-in-china-to-compete-with-its-own-seal-06/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Aug 13 2026 Dynasty launch MSRP; still current for Sep pack",
+      "tags": [
+        "Sedan",
+        "PHEV/EREV"
+      ]
+    },
+    {
+      "id": "byd-qin-max-ev-630-km-excellence",
+      "month": "2026-09",
+      "brand": "BYD",
+      "model": "Qin Max",
+      "trim": "EV 630 km Excellence",
+      "msrp_rmb": 143900,
+      "msrp_usd_approx": 21224,
+      "battery_kwh": null,
+      "range_km": "630",
+      "drive": "RWD",
+      "adas": "God's Eye B optional (+12000 RMB)",
+      "source_url": "https://carnewschina.com/2026/08/14/byd-launches-qin-max-in-china-to-compete-with-its-own-seal-06/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Aug 13 2026 launch MSRP; 2nd-gen Blade + flash charge claimed",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ]
+    },
+    {
+      "id": "byd-seal-06-2027my-dm-i-comfort-entry",
+      "month": "2026-09",
+      "brand": "BYD",
+      "model": "Seal 06 (2027MY)",
+      "trim": "DM-i Comfort (entry)",
+      "msrp_rmb": 99900,
+      "msrp_usd_approx": 14735,
+      "battery_kwh": "25.287",
+      "range_km": "230 EV (CLTC band) / up to 2370 combined",
+      "drive": "FWD (PHEV)",
+      "adas": "God's Eye / LiDAR on higher trims",
+      "source_url": "https://carnewschina.com/2026/08/12/the-2027-byd-seal-06-launches-in-china-featuring-flash-charging-and-disus-c-starting-from-14700-usd/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Aug 11 2026 Ocean launch; twin to Qin Max pricing band",
+      "tags": [
+        "Sedan",
+        "PHEV/EREV"
+      ]
+    },
+    {
+      "id": "byd-seal-06-2027my-ev-flagship-630-km-band",
+      "month": "2026-09",
+      "brand": "BYD",
+      "model": "Seal 06 (2027MY)",
+      "trim": "EV Flagship (630 km band)",
+      "msrp_rmb": 155900,
+      "msrp_usd_approx": 22994,
+      "battery_kwh": "64.315",
+      "range_km": "630",
+      "drive": "RWD",
+      "adas": "God's Eye 5.0 LiDAR on high-end configs",
+      "source_url": "https://carnewschina.com/2026/08/12/the-2027-byd-seal-06-launches-in-china-featuring-flash-charging-and-disus-c-starting-from-14700-usd/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Aug 11 2026 launch top EV trim",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ]
+    },
+    {
+      "id": "xpeng-mona-m03-540-long-range-plus",
+      "month": "2026-09",
+      "brand": "XPeng",
+      "model": "MONA M03",
+      "trim": "540 Long Range Plus",
+      "msrp_rmb": 119800,
+      "msrp_usd_approx": 17670,
+      "battery_kwh": null,
+      "range_km": "540",
+      "drive": "FWD",
+      "adas": "XNGP on higher Max/Ultra trims (Plus = base ADAS)",
+      "source_url": "https://data.carnewschina.com/database/xpeng/xpeng-mona-m03/2026",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "2026MY guide price cited in Sep 2026 retail explainers; Sep promo locks up to ~22400 RMB benefits with 5000 RMB deposit",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ]
+    },
+    {
+      "id": "zeekr-8x-max",
+      "month": "2026-09",
+      "brand": "Zeekr",
+      "model": "8X",
+      "trim": "Max",
+      "msrp_rmb": 356800,
+      "msrp_usd_approx": 52625,
+      "battery_kwh": null,
+      "range_km": "up to 410 EV CLTC (70 kWh configs claimed — verify trim)",
+      "drive": "AWD PHEV",
+      "adas": "G-ASD advanced driving (lifetime access cited in Sep promo)",
+      "source_url": "https://www.auto-in-china.com/zeekr-8x-export-price-specs-europe/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "Official China guide from 356800; Sep 1–30: 10000 RMB insurance subsidy + financing/options packages (not a guide-price cut)",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ]
+    },
+    {
+      "id": "bmw-ix3-neue-klasse-lwb-30l",
+      "month": "2026-09",
+      "brand": "BMW",
+      "model": "iX3 (Neue Klasse LWB)",
+      "trim": "30L",
+      "msrp_rmb": 269900,
+      "msrp_usd_approx": 39808,
+      "battery_kwh": null,
+      "range_km": null,
+      "drive": "RWD (235 kW motor in filing)",
+      "adas": "BMW–Momenta end-to-end ADAS (as marketed)",
+      "source_url": "https://cnevpost.com/2026/09/08/bmw-neue-klasse-ix3-filing/",
+      "accessed_utc": "2026-09-10T11:45:00Z",
+      "notes": "China pre-sale/uniform pricing from Chengdu Auto Show Aug 21; deliveries targeted Nov 2026; MIIT filing Sep 2026",
+      "tags": [
+        "SUV",
+        "BEV"
+      ]
+    }
+  ]
+}

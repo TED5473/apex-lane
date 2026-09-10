@@ -5,8 +5,9 @@ import { missingStripeEnv, stripeConfigured } from "@/lib/membership";
 import { stripeSetupMessage } from "@/lib/stripe";
 
 export const metadata: Metadata = {
-  title: "Pricing",
-  description: "Apex Lane membership — $12/mo or $99/yr via Stripe Checkout.",
+  title: "Membership",
+  description:
+    "Unlock unlimited China EV compare + CSV export. Free tier already includes 3-trim compare.",
 };
 
 const envDocs = [
@@ -28,14 +29,23 @@ export default function PricingPage() {
         Membership
       </p>
       <h1 className="mt-3 font-display text-4xl text-paper md:text-5xl">
-        Pay to read more
+        Unlimited compare + CSV
       </h1>
       <p className="mt-4 max-w-xl text-mute leading-relaxed">
-        Ledes stay free. Members unlock full briefings, pricing boards, and the
-        monthly China EV Competitive Brief. Test-mode Stripe Checkout.
+        Free already covers 3 trims with full source-linked detail. Pay only if
+        you need the full board and spreadsheet export.
       </p>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
+      <div className="mt-8">
+        <Link
+          href="/compare"
+          className="text-sm text-brass hover:text-brass-bright"
+        >
+          ← Back to compare (free)
+        </Link>
+      </div>
+
+      <div className="mt-10 grid gap-6 md:grid-cols-2">
         <div className="rounded-2xl border border-line bg-panel p-7 md:p-8">
           <p className="text-[11px] uppercase tracking-[0.2em] text-mute">
             Monthly
@@ -45,9 +55,9 @@ export default function PricingPage() {
             <span className="text-lg text-mute"> / mo</span>
           </p>
           <ul className="mt-6 space-y-2 text-sm text-mute">
-            <li>Full article bodies</li>
-            <li>Archive access</li>
-            <li>Monthly briefing digest</li>
+            <li>Unlimited trim compare</li>
+            <li>CSV export (selection or catalog)</li>
+            <li>Same source-linked rows as free</li>
           </ul>
         </div>
         <div className="rounded-2xl border border-brass/40 bg-panel p-7 md:p-8">
@@ -61,7 +71,7 @@ export default function PricingPage() {
           <ul className="mt-6 space-y-2 text-sm text-mute">
             <li>Everything in monthly</li>
             <li>≈ 2 months free</li>
-            <li>Cancel anytime via Customer Portal</li>
+            <li>Cancel via Customer Portal</li>
           </ul>
         </div>
       </div>
@@ -73,7 +83,7 @@ export default function PricingPage() {
         />
         <p className="mt-4 text-center text-xs text-mute">
           Or{" "}
-          <Link href="/api/member-demo?on=1&next=/account" className="text-brass">
+          <Link href="/api/member-demo?on=1&next=/compare" className="text-brass">
             enable demo membership
           </Link>{" "}
           without Stripe.
@@ -83,10 +93,10 @@ export default function PricingPage() {
       <section className="mt-16 rounded-2xl border border-line bg-ink p-6 md:p-8">
         <h2 className="font-display text-2xl text-paper">Stripe env (test mode)</h2>
         <p className="mt-2 text-sm text-mute">
-          Checkout handlers live at <code className="text-brass/80">/api/checkout</code>,
-          portal at <code className="text-brass/80">/api/portal</code>, webhook at{" "}
-          <code className="text-brass/80">/api/webhook</code>. Buttons never crash when
-          keys are missing — they show this setup state instead.
+          Handlers: <code className="text-brass/80">/api/checkout</code>,{" "}
+          <code className="text-brass/80">/api/portal</code>,{" "}
+          <code className="text-brass/80">/api/webhook</code>. Missing keys →
+          setup message, no crash.
         </p>
         <ul className="mt-5 space-y-2 font-mono text-xs text-mute">
           {envDocs.map((key) => (
