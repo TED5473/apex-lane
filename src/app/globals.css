@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --ink: #0c0b09;
+  --panel: #161410;
+  --paper: #ebe6dc;
+  --mute: #9a9285;
+  --line: #2a2720;
+  --brass: #c4a574;
+  --brass-bright: #d9bc8a;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-panel: var(--panel);
+  --color-paper: var(--paper);
+  --color-mute: var(--mute);
+  --color-line: var(--line);
+  --color-brass: var(--brass);
+  --color-brass-bright: var(--brass-bright);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brass) 35%, transparent);
+  color: var(--paper);
+}
