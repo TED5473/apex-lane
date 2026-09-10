@@ -1,11 +1,21 @@
 "use client";
 
-import { useCallback, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import type { Vehicle } from "@/lib/vehicles";
-import { FREE_COMPARE_LIMIT, blankLabel, labelVehicle } from "@/lib/vehicles";
+import {
+  FREE_COMPARE_LIMIT,
+  adasProxyScore,
+  blankLabel,
+  labelVehicle,
+  parseLeadNumber,
+} from "@/lib/vehicles";
 import { formatAccessed, formatRmb, formatUsd } from "@/lib/format";
 import { MethodStrip } from "@/components/MethodStrip";
+import {
+  rankSelection,
+  type ScenarioState,
+} from "@/lib/pmScore";
 
 type Props = {
   vehicles: Vehicle[];
@@ -13,101 +23,203 @@ type Props = {
   tags: string[];
   isMember: boolean;
   initialIds?: string[];
-  /** Homepage embed: hide catalog, keep board + soft export note */
   compact?: boolean;
 };
 
-function Blank() {
-  return (
-    <span className="italic text-mute/70" title="Field not present in cited source">
-      {blankLabel()}
-    </span>
-  );
-}
+const COLORS = ["#c9a45c", "#7eb8a8", "#c47a6a", "#8aa0c8", "#b08ec8", "#9aaa6a"];
 
-function SourceCell({ v }: { v: Vehicle }) {
-  if (!v.source_url) return <Blank />;
-  const accessed = formatAccessed(v.accessed_utc);
+function ToggleGroup<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: T;
+  options: { id: T; label: string }[];
+  onChange: (v: T) => void;
+}) {
   return (
-    <div className="space-y-1">
-      <a
-        href={v.source_url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-brass hover:text-brass-bright"
-      >
-        Open source ↗
-      </a>
-      {accessed ? (
-        <div className="text-[11px] text-mute">Accessed {accessed}</div>
-      ) : null}
-    </div>
-  );
-}
-
-function PriceCell({ v }: { v: Vehicle }) {
-  const rmb = formatRmb(v.msrp_rmb);
-  if (!rmb) return <Blank />;
-  return (
-    <div>
-      <div className="tabular-nums text-paper">{rmb}</div>
-      <div className="mt-0.5 text-[10px] uppercase tracking-wider text-mute">
-        Guide MSRP
+    <div className="flex flex-col gap-1.5">
+      <span className="text-[10px] uppercase tracking-[0.18em] text-mute">{label}</span>
+      <div className="flex flex-wrap gap-1">
+        {options.map((o) => {
+          const on = value === o.id;
+          return (
+            <button
+              key={o.id}
+              type="button"
+              onClick={() => onChange(o.id)}
+              className={`rounded-full px-3 py-1 text-xs transition-colors ${
+                on
+                  ? "bg-brass text-ink"
+                  : "border border-line text-mute hover:border-brass/40 hover:text-paper"
+              }`}
+            >
+              {o.label}
+            </button>
+          );
+        })}
       </div>
-      {v.msrp_usd_approx != null ? (
-        <div className="mt-1 text-xs text-mute">{formatUsd(v.msrp_usd_approx)}</div>
-      ) : null}
     </div>
   );
 }
 
-function IncentiveCell({ v }: { v: Vehicle }) {
-  if (!v.notes) return <Blank />;
-  return <span className="text-paper/85 text-[13px] leading-snug">{v.notes}</span>;
+function MetricBars({
+  title,
+  unit,
+  values,
+  invert = false,
+}: {
+  title: string;
+  unit?: string;
+  values: { id: string; label: string; value: number | null; color: string }[];
+  invert?: boolean;
+}) {
+  const numeric = values.map((v) => v.value).filter((n): n is number => n != null);
+  const max = numeric.length ? Math.max(...numeric) : 0;
+  const min = numeric.length ? Math.min(...numeric) : 0;
+  const span = Math.max(max - min, max * 0.15, 1);
+
+  return (
+    <div className="rounded-xl border border-line bg-ink/40 p-3">
+      <div className="mb-3 flex items-baseline justify-between gap-2">
+        <h3 className="text-xs font-medium uppercase tracking-wider text-mute">{title}</h3>
+        {unit ? <span className="text-[10px] text-mute/70">{unit}</span> : null}
+      </div>
+      <div className="space-y-2.5">
+        {values.map((v) => {
+          let width = 8;
+          if (v.value != null && max > 0) {
+            const norm = invert
+              ? (max - v.value) / span
+              : v.value / max;
+            width = Math.max(8, Math.min(100, Math.round(norm * 100)));
+          }
+          return (
+            <div key={v.id} className="grid grid-cols-[88px_1fr_56px] items-center gap-2">
+              <div className="truncate text-[11px] text-mute" title={v.label}>
+                {v.label}
+              </div>
+              <div className="h-2.5 overflow-hidden rounded-full bg-line/60">
+                {v.value != null ? (
+                  <div
+                    className="h-full rounded-full transition-all duration-300"
+                    style={{ width: `${width}%`, background: v.color }}
+                  />
+                ) : (
+                  <div className="h-full w-2 rounded-full bg-mute/30" />
+                )}
+              </div>
+              <div className="text-right text-[11px] tabular-nums text-paper/90">
+                {v.value != null ? v.value.toLocaleString() : "—"}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
-function SpecValue({ v, keyName }: { v: Vehicle; keyName: string }): ReactNode {
-  switch (keyName) {
-    case "msrp":
-      return <PriceCell v={v} />;
-    case "incentive":
-      return <IncentiveCell v={v} />;
-    case "source":
-      return <SourceCell v={v} />;
-    case "battery_kwh":
-      return v.battery_kwh ? v.battery_kwh : <Blank />;
-    case "range_km":
-      return v.range_km ? v.range_km : <Blank />;
-    case "drive":
-      return v.drive ? v.drive : <Blank />;
-    case "adas":
-      return v.adas ? v.adas : <Blank />;
-    case "month":
-      return v.month;
-    case "brand":
-      return v.brand;
-    case "model":
-      return v.model;
-    case "trim":
-      return v.trim;
-    default:
-      return <Blank />;
-  }
-}
+function RadarLite({
+  items,
+}: {
+  items: {
+    id: string;
+    label: string;
+    color: string;
+    priceN: number;
+    rangeN: number;
+    battN: number;
+    adasN: number;
+  }[];
+}) {
+  const cx = 90;
+  const cy = 90;
+  const r = 62;
+  const axes = ["Price fit", "Range", "Battery", "ADAS*"] as const;
+  const angle = (i: number) => (-Math.PI / 2) + (i * 2 * Math.PI) / 4;
 
-const SPEC_ROWS: { key: string; label: string; hint?: string }[] = [
-  { key: "brand", label: "Brand" },
-  { key: "model", label: "Model" },
-  { key: "trim", label: "Trim" },
-  { key: "msrp", label: "Guide MSRP", hint: "Cited guide / launch price — not street" },
-  { key: "incentive", label: "Incentive / notes", hint: "Entitlements as reported by source" },
-  { key: "battery_kwh", label: "Battery (kWh)" },
-  { key: "range_km", label: "Range (CLTC / claimed)" },
-  { key: "drive", label: "Drive" },
-  { key: "adas", label: "ADAS" },
-  { key: "month", label: "Pack month" },
-  { key: "source", label: "Source + accessed" },
-];
+  const pt = (i: number, t: number) => {
+    const a = angle(i);
+    return [cx + Math.cos(a) * r * t, cy + Math.sin(a) * r * t] as const;
+  };
+
+  return (
+    <div className="rounded-xl border border-line bg-ink/40 p-3">
+      <div className="mb-2 flex items-baseline justify-between">
+        <h3 className="text-xs font-medium uppercase tracking-wider text-mute">Radar</h3>
+        <span className="text-[10px] text-mute/70">normalized · *ADAS proxy</span>
+      </div>
+      <div className="flex flex-col items-center gap-3 md:flex-row md:items-start">
+        <svg viewBox="0 0 180 180" className="h-44 w-44 shrink-0">
+          {[0.35, 0.65, 1].map((t) => (
+            <polygon
+              key={t}
+              fill="none"
+              stroke="rgba(255,255,255,0.08)"
+              strokeWidth="1"
+              points={axes.map((_, i) => pt(i, t).join(",")).join(" ")}
+            />
+          ))}
+          {axes.map((_, i) => {
+            const [x, y] = pt(i, 1);
+            return (
+              <line
+                key={i}
+                x1={cx}
+                y1={cy}
+                x2={x}
+                y2={y}
+                stroke="rgba(255,255,255,0.12)"
+                strokeWidth="1"
+              />
+            );
+          })}
+          {axes.map((label, i) => {
+            const [x, y] = pt(i, 1.18);
+            return (
+              <text
+                key={label}
+                x={x}
+                y={y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="rgba(255,255,255,0.45)"
+                fontSize="8"
+              >
+                {label}
+              </text>
+            );
+          })}
+          {items.map((it) => {
+            const vals = [it.priceN, it.rangeN, it.battN, it.adasN];
+            const points = vals.map((v, i) => pt(i, Math.max(0.08, v)).join(",")).join(" ");
+            return (
+              <polygon
+                key={it.id}
+                points={points}
+                fill={it.color}
+                fillOpacity={0.18}
+                stroke={it.color}
+                strokeWidth="1.6"
+              />
+            );
+          })}
+        </svg>
+        <div className="flex flex-wrap gap-2 md:flex-col">
+          {items.map((it) => (
+            <div key={it.id} className="flex items-center gap-2 text-[11px] text-mute">
+              <span className="h-2 w-2 rounded-full" style={{ background: it.color }} />
+              <span className="text-paper/80">{it.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function CompareBoard({
   vehicles,
@@ -119,9 +231,7 @@ export function CompareBoard({
 }: Props) {
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
     const valid = initialIds.filter((id) => vehicles.some((v) => v.id === id));
-    const seeded = valid.length
-      ? valid
-      : [];
+    const seeded = valid.length ? valid : [];
     return isMember ? seeded : seeded.slice(0, FREE_COMPARE_LIMIT);
   });
   const [brandFilter, setBrandFilter] = useState("all");
@@ -130,6 +240,12 @@ export function CompareBoard({
   const [gateMsg, setGateMsg] = useState<string | null>(null);
   const [exportBusy, setExportBusy] = useState(false);
   const [exportError, setExportError] = useState<string | null>(null);
+  const [scenario, setScenario] = useState<ScenarioState>({
+    trip: "city",
+    charging: "home-dc",
+    budget: "lean",
+    seats: "any",
+  });
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -137,7 +253,7 @@ export function CompareBoard({
       if (brandFilter !== "all" && v.brand !== brandFilter) return false;
       if (tagFilter !== "all" && !v.tags.includes(tagFilter)) return false;
       if (!q) return true;
-      const hay = `${v.brand} ${v.model} ${v.trim} ${v.tags.join(" ")}`.toLowerCase();
+      const hay = `${v.brand} ${v.model} ${v.trim} ${v.tags.join(" ")} ${(v.decision_tags || []).join(" ")}`.toLowerCase();
       return hay.includes(q);
     });
   }, [vehicles, brandFilter, tagFilter, query]);
@@ -150,6 +266,48 @@ export function CompareBoard({
     [selectedIds, vehicles]
   );
 
+  const ranked = useMemo(() => rankSelection(selected, scenario), [selected, scenario]);
+
+  const colorOf = useCallback(
+    (id: string) => {
+      const idx = selectedIds.indexOf(id);
+      return COLORS[(idx >= 0 ? idx : 0) % COLORS.length];
+    },
+    [selectedIds]
+  );
+
+  const chartData = useMemo(() => {
+    const prices = selected.map((v) => v.msrp_rmb);
+    const maxPrice = Math.max(...prices.filter((n): n is number => n != null), 1);
+    const ranges = selected.map((v) => parseLeadNumber(v.range_km));
+    const maxRange = Math.max(...ranges.filter((n): n is number => n != null), 1);
+    const batts = selected.map((v) => parseLeadNumber(v.battery_kwh));
+    const maxBatt = Math.max(...batts.filter((n): n is number => n != null), 1);
+    const adas = selected.map((v) => adasProxyScore(v));
+    const maxAdas = Math.max(...adas.filter((n): n is number => n != null), 1);
+
+    return selected.map((v) => {
+      const short = `${v.brand} ${v.model}`.replace(/^(.{14}).+$/, "$1…");
+      const price = v.msrp_rmb;
+      const range = parseLeadNumber(v.range_km);
+      const batt = parseLeadNumber(v.battery_kwh);
+      const a = adasProxyScore(v);
+      return {
+        id: v.id,
+        label: short,
+        color: colorOf(v.id),
+        price,
+        range,
+        batt,
+        adas: a,
+        priceN: price != null ? Math.max(0.12, 1 - price / maxPrice) : 0.12,
+        rangeN: range != null ? range / maxRange : 0.12,
+        battN: batt != null ? batt / maxBatt : 0.12,
+        adasN: a != null ? a / maxAdas : 0.12,
+      };
+    });
+  }, [selected, colorOf]);
+
   const addVehicle = useCallback(
     (id: string) => {
       setGateMsg(null);
@@ -157,9 +315,7 @@ export function CompareBoard({
       setSelectedIds((prev) => {
         if (prev.includes(id)) return prev;
         if (!isMember && prev.length >= FREE_COMPARE_LIMIT) {
-          setGateMsg(
-            "Free compares 3 trims. Unlimited + CSV unlock with membership."
-          );
+          setGateMsg("Free = 3 trims. Unlock unlimited + CSV.");
           return prev;
         }
         return [...prev, id];
@@ -182,12 +338,12 @@ export function CompareBoard({
     async (scope: "selection" | "catalog") => {
       setExportError(null);
       if (!isMember) {
-        setExportError("CSV export is a member feature.");
+        setExportError("CSV is members-only.");
         return;
       }
       const ids = scope === "selection" ? selectedIds : vehicles.map((v) => v.id);
       if (scope === "selection" && ids.length === 0) {
-        setExportError("Select at least one trim to export.");
+        setExportError("Select a trim first.");
         return;
       }
       setExportBusy(true);
@@ -199,7 +355,7 @@ export function CompareBoard({
         });
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
-          setExportError(data?.error || "Export blocked. Membership required.");
+          setExportError(data?.error || "Export blocked.");
           return;
         }
         const blob = await res.blob();
@@ -213,7 +369,7 @@ export function CompareBoard({
         a.click();
         URL.revokeObjectURL(url);
       } catch {
-        setExportError("Export failed. Try again.");
+        setExportError("Export failed.");
       } finally {
         setExportBusy(false);
       }
@@ -221,29 +377,107 @@ export function CompareBoard({
     [isMember, selectedIds, vehicles]
   );
 
-  const board = (
-    <section className="rounded-2xl border border-line bg-panel/60 p-5 md:p-6">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+  const scenarioPanel = (
+    <section className="rounded-2xl border border-line bg-panel/60 p-4 md:p-5">
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="font-display text-2xl text-paper">
-            {compact ? "Sample compare" : "Compare board"}
+          <h2 className="font-display text-xl text-paper">Scenario</h2>
+          <p className="mt-0.5 text-[11px] text-mute">Reweights the strip — not a buy call</p>
+        </div>
+        {selected.length > 0 && !compact && (
+          <button
+            type="button"
+            onClick={clearAll}
+            className="rounded-full border border-line px-3 py-1 text-[11px] text-mute hover:text-paper"
+          >
+            Clear board
+          </button>
+        )}
+      </div>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ToggleGroup
+          label="Trip"
+          value={scenario.trip}
+          onChange={(trip) => setScenario((s) => ({ ...s, trip }))}
+          options={[
+            { id: "city", label: "City" },
+            { id: "highway", label: "Highway" },
+          ]}
+        />
+        <ToggleGroup
+          label="Charging"
+          value={scenario.charging}
+          onChange={(charging) => setScenario((s) => ({ ...s, charging }))}
+          options={[
+            { id: "home-dc", label: "Home / DC" },
+            { id: "sparse", label: "Sparse DC" },
+          ]}
+        />
+        <ToggleGroup
+          label="Budget"
+          value={scenario.budget}
+          onChange={(budget) => setScenario((s) => ({ ...s, budget }))}
+          options={[
+            { id: "lean", label: "Lean" },
+            { id: "open", label: "Open" },
+          ]}
+        />
+        <ToggleGroup
+          label="Seats"
+          value={scenario.seats}
+          onChange={(seats) => setScenario((s) => ({ ...s, seats }))}
+          options={[
+            { id: "any", label: "Any" },
+            { id: "family", label: "Family SUV" },
+          ]}
+        />
+      </div>
+
+      {selected.length > 0 ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {ranked.map((r, i) => (
+            <div
+              key={r.vehicle.id}
+              className="max-w-full rounded-2xl border border-line bg-ink/50 px-3 py-2"
+              style={{ borderColor: `${colorOf(r.vehicle.id)}55` }}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] uppercase tracking-wider text-mute">
+                  {i === 0 ? "Fit lead" : `#${i + 1}`}
+                </span>
+                <span
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ background: colorOf(r.vehicle.id) }}
+                />
+                <span className="text-xs text-paper">
+                  {r.vehicle.brand} {r.vehicle.model}
+                </span>
+                <span className="text-[10px] tabular-nums text-mute">{r.score}</span>
+              </div>
+              <p className="mt-1 text-[11px] leading-snug text-mute line-clamp-2">{r.chip}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="mt-4 text-xs text-mute">Add trims to see fit chips.</p>
+      )}
+    </section>
+  );
+
+  const visualBoard = (
+    <section className="rounded-2xl border border-line bg-panel/60 p-4 md:p-5">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 className="font-display text-xl text-paper">
+            {compact ? "Live compare" : "Visual board"}
           </h2>
-          <p className="mt-1 text-sm text-mute">
+          <p className="mt-0.5 text-[11px] text-mute">
             {selected.length === 0
-              ? "Add trims to compare side-by-side."
-              : `${selected.length} trim${selected.length === 1 ? "" : "s"} · guide MSRP + source-linked`}
+              ? "Empty — pick trims below"
+              : `${selected.length} trim${selected.length === 1 ? "" : "s"}`}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {selected.length > 0 && !compact && (
-            <button
-              type="button"
-              onClick={clearAll}
-              className="rounded-full border border-line px-3.5 py-1.5 text-xs text-mute hover:border-brass/40 hover:text-paper"
-            >
-              Clear
-            </button>
-          )}
           {isMember ? (
             <>
               <button
@@ -252,119 +486,163 @@ export function CompareBoard({
                 onClick={() => downloadCsv("selection")}
                 className="rounded-full bg-brass px-3.5 py-1.5 text-xs font-medium text-ink hover:bg-brass-bright disabled:opacity-40"
               >
-                {exportBusy ? "Exporting…" : "Export selection CSV"}
+                {exportBusy ? "…" : "CSV selection"}
               </button>
               {!compact && (
                 <button
                   type="button"
                   disabled={exportBusy}
                   onClick={() => downloadCsv("catalog")}
-                  className="rounded-full border border-brass/40 bg-brass/10 px-3.5 py-1.5 text-xs font-medium text-brass hover:bg-brass/20 disabled:opacity-40"
+                  className="rounded-full border border-brass/40 bg-brass/10 px-3.5 py-1.5 text-xs text-brass disabled:opacity-40"
                 >
-                  Export full catalog
+                  CSV catalog
                 </button>
               )}
             </>
           ) : (
             <Link
               href="/pricing"
-              className="rounded-full border border-line px-3.5 py-1.5 text-xs text-mute hover:border-brass/40 hover:text-paper"
+              className="rounded-full border border-line px-3.5 py-1.5 text-xs text-mute hover:text-paper"
             >
-              CSV export · members
+              CSV · members
             </Link>
           )}
         </div>
       </div>
 
-      {exportError && (
-        <p className="mt-3 text-sm text-amber-200/90">
-          {exportError}{" "}
-          {!isMember && (
-            <Link href="/pricing" className="text-brass hover:text-brass-bright">
-              Pricing
-            </Link>
-          )}
-        </p>
-      )}
+      {exportError && <p className="mt-2 text-xs text-amber-200/90">{exportError}</p>}
 
       {selected.length === 0 ? (
-        <p className="mt-8 py-10 text-center text-sm text-mute border border-dashed border-line rounded-xl">
-          Compare board is empty.
-        </p>
-      ) : (
-        <div className="mt-6 overflow-x-auto rounded-xl border border-line">
-          <table className="w-full min-w-[720px] text-left text-sm">
-            <thead>
-              <tr className="bg-ink text-[11px] uppercase tracking-wider text-mute">
-                <th className="sticky left-0 z-10 bg-ink px-3 py-2.5 font-medium min-w-[150px]">
-                  Spec
-                </th>
-                {selected.map((v) => (
-                  <th
-                    key={v.id}
-                    className="px-3 py-2.5 font-medium text-paper normal-case tracking-normal min-w-[200px]"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <span>
-                        {v.brand} {v.model}
-                        <span className="mt-0.5 block text-xs text-mute">
-                          {v.trim}
-                        </span>
-                      </span>
-                      {!compact && (
-                        <button
-                          type="button"
-                          onClick={() => removeVehicle(v.id)}
-                          className="text-mute hover:text-paper text-xs"
-                          aria-label={`Remove ${labelVehicle(v)}`}
-                        >
-                          ✕
-                        </button>
-                      )}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {SPEC_ROWS.map((row) => (
-                <tr key={row.key} className="border-t border-line/70">
-                  <th className="sticky left-0 z-10 bg-panel px-3 py-2.5 text-left align-top">
-                    <div className="text-xs font-medium uppercase tracking-wider text-mute">
-                      {row.label}
-                    </div>
-                    {row.hint ? (
-                      <div className="mt-1 text-[10px] font-normal normal-case tracking-normal text-mute/70 leading-snug">
-                        {row.hint}
-                      </div>
-                    ) : null}
-                  </th>
-                  {selected.map((v) => (
-                    <td
-                      key={v.id + row.key}
-                      className="px-3 py-2.5 text-paper/90 align-top max-w-[280px]"
-                    >
-                      <SpecValue v={v} keyName={row.key} />
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-6 rounded-xl border border-dashed border-line py-12 text-center text-sm text-mute">
+          Pick up to {isMember ? "∞" : FREE_COMPARE_LIMIT} trims
         </div>
+      ) : (
+        <>
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+            {selected.map((v) => (
+              <div
+                key={v.id}
+                className="min-w-[168px] shrink-0 rounded-2xl border border-line bg-ink/50 p-3"
+                style={{ boxShadow: `inset 3px 0 0 ${colorOf(v.id)}` }}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <div className="text-sm text-paper">
+                      {v.brand} {v.model}
+                    </div>
+                    <div className="text-[11px] text-mute">{v.trim}</div>
+                  </div>
+                  {!compact && (
+                    <button
+                      type="button"
+                      onClick={() => removeVehicle(v.id)}
+                      className="text-mute hover:text-paper text-xs"
+                      aria-label={`Remove ${labelVehicle(v)}`}
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+                <div className="mt-2 text-sm tabular-nums text-brass">
+                  {formatRmb(v.msrp_rmb) || blankLabel()}
+                </div>
+                <div className="mt-1 flex flex-wrap gap-1">
+                  {(v.powertrain ? [v.powertrain] : v.tags.slice(0, 2)).map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full border border-line px-1.5 py-0.5 text-[10px] text-mute"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                {v.key_differentiators ? (
+                  <p className="mt-2 text-[11px] leading-snug text-mute line-clamp-2">
+                    {v.key_differentiators}
+                  </p>
+                ) : null}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-3 lg:grid-cols-2">
+            <MetricBars
+              title="Guide MSRP"
+              unit="RMB · lower bar = cheaper"
+              invert
+              values={chartData.map((d) => ({
+                id: d.id,
+                label: d.label,
+                value: d.price,
+                color: d.color,
+              }))}
+            />
+            <MetricBars
+              title="Range (lead figure)"
+              unit="CLTC km"
+              values={chartData.map((d) => ({
+                id: d.id,
+                label: d.label,
+                value: d.range,
+                color: d.color,
+              }))}
+            />
+            <MetricBars
+              title="Battery"
+              unit="kWh"
+              values={chartData.map((d) => ({
+                id: d.id,
+                label: d.label,
+                value: d.batt,
+                color: d.color,
+              }))}
+            />
+            <RadarLite items={chartData} />
+          </div>
+
+          <div className="mt-3 space-y-1 border-t border-line/60 pt-3">
+            {selected.map((v) => (
+              <div key={v.id} className="flex flex-wrap items-baseline gap-x-2 text-[10px] text-mute">
+                <span className="text-paper/70">
+                  {v.brand} {v.model}
+                </span>
+                {v.source_url ? (
+                  <a
+                    href={v.source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brass hover:text-brass-bright"
+                  >
+                    source
+                  </a>
+                ) : (
+                  <span>—</span>
+                )}
+                {v.accessed_utc ? <span>{formatAccessed(v.accessed_utc)}</span> : null}
+                {v.msrp_usd_approx != null ? (
+                  <span>~{formatUsd(v.msrp_usd_approx)}</span>
+                ) : null}
+                {v.charge_notes ? <span>· {v.charge_notes}</span> : null}
+              </div>
+            ))}
+            <p className="pt-1 text-[10px] text-mute/70">
+              ADAS axis is a marketing-hardware proxy, not a safety score. Guide ≠ deal.
+            </p>
+          </div>
+        </>
       )}
 
       {compact && (
-        <div className="mt-5 flex flex-wrap gap-3">
+        <div className="mt-4 flex flex-wrap gap-2">
           <Link
             href={`/compare?ids=${selectedIds.join(",")}`}
-            className="rounded-full bg-paper px-5 py-2.5 text-sm font-medium text-ink hover:bg-brass-bright transition-colors"
+            className="rounded-full bg-paper px-5 py-2.5 text-sm font-medium text-ink hover:bg-brass-bright"
           >
-            Open full compare
+            Full tool
           </Link>
           <Link
             href="/pricing"
-            className="rounded-full border border-line px-5 py-2.5 text-sm text-mute hover:border-brass/40 hover:text-paper transition-colors"
+            className="rounded-full border border-line px-5 py-2.5 text-sm text-mute hover:text-paper"
           >
             Unlimited + CSV
           </Link>
@@ -377,13 +655,14 @@ export function CompareBoard({
     return (
       <div className="space-y-4">
         <MethodStrip />
-        {board}
+        {scenarioPanel}
+        {visualBoard}
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <span
           className={`rounded-full px-3 py-1 text-xs uppercase tracking-wider ${
@@ -392,41 +671,48 @@ export function CompareBoard({
               : "border border-line bg-panel text-mute"
           }`}
         >
-          {isMember
-            ? "Member · unlimited + CSV"
-            : `Free · ${FREE_COMPARE_LIMIT} trims`}
+          {isMember ? "Member · unlimited + CSV" : `Free · ${FREE_COMPARE_LIMIT} trims`}
         </span>
         {!isMember && (
-          <Link href="/pricing" className="text-sm text-mute hover:text-brass">
-            Need more than 3? Membership unlocks unlimited + export
+          <Link href="/pricing" className="text-xs text-mute hover:text-brass">
+            Need more than 3?
           </Link>
         )}
       </div>
 
       <MethodStrip />
+      {scenarioPanel}
+      {visualBoard}
 
-      <section className="rounded-2xl border border-line bg-panel/60 p-5 md:p-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      {gateMsg && (
+        <div className="rounded-xl border border-brass/40 bg-brass/10 px-4 py-3 text-sm text-paper">
+          {gateMsg}{" "}
+          <Link href="/pricing" className="text-brass hover:text-brass-bright">
+            Membership
+          </Link>
+        </div>
+      )}
+
+      <section className="rounded-2xl border border-line bg-panel/60 p-4 md:p-5">
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="font-display text-2xl text-paper">Catalog</h2>
-            <p className="mt-1 text-sm text-mute">
-              {vehicles.length} trims · filter · add to board
-            </p>
+            <h2 className="font-display text-xl text-paper">Catalog</h2>
+            <p className="mt-0.5 text-[11px] text-mute">{vehicles.length} trims</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <input
               type="search"
-              placeholder="Search brand / model / trim"
+              placeholder="Search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="min-w-[200px] flex-1 rounded-full border border-line bg-ink px-4 py-2 text-sm text-paper placeholder:text-mute/70 outline-none focus:border-brass/50"
+              className="min-w-[160px] flex-1 rounded-full border border-line bg-ink px-4 py-2 text-sm text-paper placeholder:text-mute/70 outline-none focus:border-brass/50"
             />
             <select
               value={brandFilter}
               onChange={(e) => setBrandFilter(e.target.value)}
-              className="rounded-full border border-line bg-ink px-3 py-2 text-sm text-paper outline-none focus:border-brass/50"
+              className="rounded-full border border-line bg-ink px-3 py-2 text-sm text-paper outline-none"
             >
-              <option value="all">All brands</option>
+              <option value="all">Brand</option>
               {brands.map((b) => (
                 <option key={b} value={b}>
                   {b}
@@ -436,9 +722,9 @@ export function CompareBoard({
             <select
               value={tagFilter}
               onChange={(e) => setTagFilter(e.target.value)}
-              className="rounded-full border border-line bg-ink px-3 py-2 text-sm text-paper outline-none focus:border-brass/50"
+              className="rounded-full border border-line bg-ink px-3 py-2 text-sm text-paper outline-none"
             >
-              <option value="all">All body / type</option>
+              <option value="all">Type</option>
               {tags.map((t) => (
                 <option key={t} value={t}>
                   {t}
@@ -448,88 +734,46 @@ export function CompareBoard({
           </div>
         </div>
 
-        <div className="mt-5 max-h-[320px] overflow-auto rounded-xl border border-line">
-          <table className="w-full min-w-[640px] text-left text-sm">
-            <thead className="sticky top-0 bg-ink text-[11px] uppercase tracking-wider text-mute">
-              <tr>
-                <th className="px-3 py-2 font-medium">Vehicle</th>
-                <th className="px-3 py-2 font-medium">Tags</th>
-                <th className="px-3 py-2 font-medium">Guide MSRP</th>
-                <th className="px-3 py-2 font-medium">Range</th>
-                <th className="px-3 py-2 font-medium">Source</th>
-                <th className="px-3 py-2 font-medium"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((v) => {
-                const on = selectedIds.includes(v.id);
-                return (
-                  <tr key={v.id} className="border-t border-line/70 hover:bg-ink/40">
-                    <td className="px-3 py-2.5 text-paper">
-                      <div className="font-medium">{labelVehicle(v)}</div>
-                    </td>
-                    <td className="px-3 py-2.5 text-mute">{v.tags.join(" · ")}</td>
-                    <td className="px-3 py-2.5 tabular-nums text-paper">
-                      {formatRmb(v.msrp_rmb) || <Blank />}
-                    </td>
-                    <td className="px-3 py-2.5 text-mute">
-                      {v.range_km || <Blank />}
-                    </td>
-                    <td className="px-3 py-2.5">
-                      {v.source_url ? (
-                        <a
-                          href={v.source_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-brass hover:text-brass-bright text-xs"
-                        >
-                          Source
-                          {v.accessed_utc
-                            ? ` · ${formatAccessed(v.accessed_utc)}`
-                            : ""}
-                        </a>
-                      ) : (
-                        <Blank />
-                      )}
-                    </td>
-                    <td className="px-3 py-2.5 text-right">
-                      <button
-                        type="button"
-                        onClick={() => (on ? removeVehicle(v.id) : addVehicle(v.id))}
-                        className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                          on
-                            ? "border border-line text-mute hover:border-brass/40 hover:text-paper"
-                            : "bg-paper text-ink hover:bg-brass-bright"
-                        }`}
-                      >
-                        {on ? "Remove" : "Compare"}
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-              {filtered.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="px-3 py-8 text-center text-mute">
-                    No vehicles match these filters.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+        <div className="mt-4 grid max-h-[360px] gap-2 overflow-auto sm:grid-cols-2">
+          {filtered.map((v) => {
+            const on = selectedIds.includes(v.id);
+            return (
+              <button
+                key={v.id}
+                type="button"
+                onClick={() => (on ? removeVehicle(v.id) : addVehicle(v.id))}
+                className={`rounded-xl border px-3 py-2.5 text-left transition-colors ${
+                  on
+                    ? "border-brass/50 bg-brass/10"
+                    : "border-line bg-ink/40 hover:border-brass/30"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <div className="text-sm text-paper">{labelVehicle(v)}</div>
+                    <div className="mt-1 flex flex-wrap gap-1">
+                      {v.tags.slice(0, 3).map((t) => (
+                        <span key={t} className="text-[10px] text-mute">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs tabular-nums text-brass">
+                      {formatRmb(v.msrp_rmb) || "—"}
+                    </div>
+                    <div className="mt-1 text-[10px] text-mute">{on ? "On board" : "Add"}</div>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+          {filtered.length === 0 && (
+            <p className="col-span-full py-8 text-center text-sm text-mute">No matches</p>
+          )}
         </div>
       </section>
-
-      {gateMsg && (
-        <div className="rounded-xl border border-brass/40 bg-brass/10 px-4 py-3 text-sm text-paper">
-          {gateMsg}{" "}
-          <Link href="/pricing" className="text-brass hover:text-brass-bright">
-            See membership
-          </Link>
-        </div>
-      )}
-
-      {board}
     </div>
   );
 }

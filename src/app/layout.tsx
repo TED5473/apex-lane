@@ -19,11 +19,11 @@ const body = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: {
-    default: "Apex Lane — China EV compare",
+    default: "Apex Lane — China EV compare tool",
     template: "%s · Apex Lane",
   },
   description:
-    "Free China EV guide-MSRP & spec compare. Source-linked rows. Members unlock unlimited compare and CSV export.",
+    "Interactive China EV compare tool — charts, scenario toggles, source-linked guide MSRP. Free 3 trims; members unlimited + CSV.",
 };
 
 export default function RootLayout({

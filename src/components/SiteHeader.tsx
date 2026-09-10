@@ -2,7 +2,6 @@ import Link from "next/link";
 
 const nav = [
   { href: "/compare", label: "Compare" },
-  { href: "/briefings", label: "Notes" },
   { href: "/about", label: "About" },
   { href: "/account", label: "Account" },
 ];
@@ -16,7 +15,7 @@ export function SiteHeader() {
             Apex Lane
           </span>
           <span className="mt-1 text-[10px] uppercase tracking-[0.22em] text-mute">
-            China EV compare
+            China EV tool
           </span>
         </Link>
         <nav className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm text-mute">

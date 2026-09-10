@@ -19,6 +19,12 @@
       "tags": [
         "Sedan",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat Sedan",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly"
       ]
     },
     {
@@ -39,6 +45,12 @@
       "tags": [
         "Sedan",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat Sedan",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly"
       ]
     },
     {
@@ -59,6 +71,13 @@
       "tags": [
         "SUV",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly",
+        "family"
       ]
     },
     {
@@ -79,6 +98,13 @@
       "tags": [
         "SUV",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly",
+        "family"
       ]
     },
     {
@@ -99,6 +125,13 @@
       "tags": [
         "SUV",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly",
+        "family"
       ]
     },
     {
@@ -119,6 +152,13 @@
       "tags": [
         "SUV",
         "PHEV/EREV"
+      ],
+      "powertrain": "PHEV/EREV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "highway-range-buffer"
       ]
     },
     {
@@ -139,6 +179,13 @@
       "tags": [
         "SUV",
         "PHEV/EREV"
+      ],
+      "powertrain": "PHEV/EREV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "highway-range-buffer"
       ]
     },
     {
@@ -159,6 +206,13 @@
       "tags": [
         "SUV",
         "PHEV/EREV"
+      ],
+      "powertrain": "PHEV/EREV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "highway-range-buffer"
       ]
     },
     {
@@ -179,6 +233,13 @@
       "tags": [
         "SUV",
         "PHEV/EREV"
+      ],
+      "powertrain": "PHEV/EREV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "highway-range-buffer"
       ]
     },
     {
@@ -199,6 +260,13 @@
       "tags": [
         "Sedan",
         "PHEV/EREV"
+      ],
+      "powertrain": "PHEV",
+      "body_layout": "5-seat Sedan",
+      "decision_tags": [
+        "erev-phev",
+        "highway-range-buffer",
+        "value"
       ]
     },
     {
@@ -219,6 +287,13 @@
       "tags": [
         "Sedan",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat Sedan",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly",
+        "value"
       ]
     },
     {
@@ -239,6 +314,13 @@
       "tags": [
         "Sedan",
         "PHEV/EREV"
+      ],
+      "powertrain": "PHEV",
+      "body_layout": "5-seat Sedan",
+      "decision_tags": [
+        "erev-phev",
+        "highway-range-buffer",
+        "value"
       ]
     },
     {
@@ -259,6 +341,12 @@
       "tags": [
         "Sedan",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat Sedan",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly"
       ]
     },
     {
@@ -279,6 +367,13 @@
       "tags": [
         "Sedan",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat Sedan",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly",
+        "value"
       ]
     },
     {
@@ -299,6 +394,14 @@
       "tags": [
         "SUV",
         "PHEV/EREV"
+      ],
+      "powertrain": "PHEV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "highway-range-buffer",
+        "premium"
       ]
     },
     {
@@ -319,6 +422,608 @@
       "tags": [
         "SUV",
         "BEV"
+      ],
+      "powertrain": "BEV",
+      "body_layout": "5-seat SUV",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly",
+        "family"
+      ]
+    },
+    {
+      "id": "xiaomi-su7-standard",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "SU7",
+      "trim": "Standard",
+      "msrp_rmb": 219900,
+      "msrp_usd_approx": 32434,
+      "battery_kwh": "73",
+      "range_km": "720",
+      "drive": "RWD",
+      "adas": "Xiaomi HAD (LiDAR + ~700 TOPS, as marketed on 2026MY)",
+      "source_url": "https://www.electrive.com/2026/03/20/approximately-27500-xiaomi-keeps-price-of-new-su7-below-tesla/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "2026MY guide; dual-checked vs PCauto/Sina (21.99万). +4000 vs prior gen; −10000 vs Jan pre-sale.",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "Claimed up to ~670 km CLTC replenished in 15 min (press)",
+      "body_layout": "5-seat Sedan",
+      "key_differentiators": "Full-line LiDAR + dual-chamber air suspension on entry trim",
+      "decision_tags": [
+        "bev",
+        "city-charge-friendly",
+        "value",
+        "performance-sedan"
+      ]
+    },
+    {
+      "id": "xiaomi-su7-pro",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "SU7",
+      "trim": "Pro",
+      "msrp_rmb": 249900,
+      "msrp_usd_approx": 36858,
+      "battery_kwh": "96.3",
+      "range_km": "902",
+      "drive": "RWD",
+      "adas": "Xiaomi HAD (LiDAR + ~700 TOPS)",
+      "source_url": "https://www.electrive.com/2026/03/20/approximately-27500-xiaomi-keeps-price-of-new-su7-below-tesla/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "2026MY guide; dual-checked vs PCauto (24.99万).",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": null,
+      "body_layout": "5-seat Sedan",
+      "key_differentiators": "Longest CLTC range band in SU7 trio",
+      "decision_tags": [
+        "bev",
+        "range",
+        "city-charge-friendly"
+      ]
+    },
+    {
+      "id": "xiaomi-su7-max",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "SU7",
+      "trim": "Max",
+      "msrp_rmb": 303900,
+      "msrp_usd_approx": 44823,
+      "battery_kwh": "101.7",
+      "range_km": "835",
+      "drive": "AWD",
+      "adas": "Xiaomi HAD (LiDAR + ~700 TOPS)",
+      "source_url": "https://www.electrive.com/2026/03/20/approximately-27500-xiaomi-keeps-price-of-new-su7-below-tesla/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "2026MY guide; dual-checked vs PCauto (30.39万). Dual-motor AWD.",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "High-voltage pack (~897 V claimed in press)",
+      "body_layout": "5-seat Sedan",
+      "key_differentiators": "AWD dual-motor performance trim",
+      "decision_tags": [
+        "bev",
+        "performance-sedan",
+        "premium"
+      ]
+    },
+    {
+      "id": "xiaomi-yu7-standard",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "YU7",
+      "trim": "Standard",
+      "msrp_rmb": 233500,
+      "msrp_usd_approx": 34440,
+      "battery_kwh": "73.0",
+      "range_km": "643",
+      "drive": "RWD",
+      "adas": "Xiaomi HAD (as marketed)",
+      "source_url": "https://cnevpost.com/2026/05/21/xiaomi-launches-new-yu7-standard-challenge-tesla-model-y/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "May 21 2026 launch of cheaper Standard; prior Standard renamed Long Range at 253500.",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "10–80% ~20 min claimed; 15 min ~405 km claimed",
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Price undercut vs Model Y RWD band",
+      "decision_tags": [
+        "bev",
+        "family",
+        "value",
+        "city-charge-friendly"
+      ]
+    },
+    {
+      "id": "xiaomi-yu7-long-range",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "YU7",
+      "trim": "Long Range",
+      "msrp_rmb": 253500,
+      "msrp_usd_approx": 37389,
+      "battery_kwh": "96.3",
+      "range_km": "835",
+      "drive": "RWD",
+      "adas": "Xiaomi HAD (as marketed)",
+      "source_url": "https://cnevpost.com/2026/05/21/xiaomi-launches-new-yu7-standard-challenge-tesla-model-y/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Former Standard renamed Long Range; guide unchanged at 253500 (CnEVPost).",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": null,
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Long CLTC range RWD family SUV",
+      "decision_tags": [
+        "bev",
+        "family",
+        "range"
+      ]
+    },
+    {
+      "id": "xiaomi-yu7-pro",
+      "month": "2026-09",
+      "brand": "Xiaomi",
+      "model": "YU7",
+      "trim": "Pro",
+      "msrp_rmb": 279900,
+      "msrp_usd_approx": 41283,
+      "battery_kwh": "96.3",
+      "range_km": "770",
+      "drive": "AWD",
+      "adas": "Xiaomi HAD (as marketed)",
+      "source_url": "https://cnevpost.com/cars/xiaomi-yu7/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Original launch Pro guide; still cited alongside May 2026 Standard addition. Sep retail explainers list same band.",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": null,
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "AWD mid trim",
+      "decision_tags": [
+        "bev",
+        "family",
+        "awd"
+      ]
+    },
+    {
+      "id": "nio-et5-100kwh",
+      "month": "2026-09",
+      "brand": "NIO",
+      "model": "ET5",
+      "trim": "100 kWh (battery included)",
+      "msrp_rmb": 298000,
+      "msrp_usd_approx": 43953,
+      "battery_kwh": "100",
+      "range_km": "710–740",
+      "drive": "AWD",
+      "adas": "NOP / assisted driving (blue NOA indicator lights on 2026MY)",
+      "source_url": "https://cnevpost.com/2026/04/02/nio-launches-updated-5566-lineup/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Apr 2 2026 update; dual-source CarNewsChina same 298000 pack-included. BaaS alternate 190000 not used as MSRP.",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "Battery swap network eligible (brand ecosystem)",
+      "body_layout": "5-seat Sedan",
+      "key_differentiators": "Swap-ready pack-included MSRP",
+      "decision_tags": [
+        "bev",
+        "premium",
+        "swap-ecosystem"
+      ]
+    },
+    {
+      "id": "nio-es6-100kwh",
+      "month": "2026-09",
+      "brand": "NIO",
+      "model": "ES6",
+      "trim": "100 kWh (battery included)",
+      "msrp_rmb": 338000,
+      "msrp_usd_approx": 49853,
+      "battery_kwh": "100",
+      "range_km": "630–655",
+      "drive": "AWD",
+      "adas": "NOP (as marketed)",
+      "source_url": "https://cnevpost.com/2026/04/02/nio-launches-updated-5566-lineup/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Dual-source CarNewsChina 338000 pack-included; BaaS 230000 alternate.",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "Battery swap network eligible",
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Mid-size premium SUV + swap",
+      "decision_tags": [
+        "bev",
+        "family",
+        "premium",
+        "swap-ecosystem"
+      ]
+    },
+    {
+      "id": "li-auto-l6-ultra",
+      "month": "2026-09",
+      "brand": "Li Auto",
+      "model": "L6",
+      "trim": "Ultra",
+      "msrp_rmb": 249800,
+      "msrp_usd_approx": 36844,
+      "battery_kwh": "51",
+      "range_km": "300 EV / ≥1250 combined (CLTC band)",
+      "drive": "AWD EREV",
+      "adas": "Mach M100 intelligent driving (as marketed)",
+      "source_url": "https://cnevpost.com/2026/07/16/li-auto-launches-revamped-l6/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Jul 16 2026 single-trim Ultra; dual-checked deliveries coverage Jul 20. Battery/range detail also in iEVChina launch briefing.",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ],
+      "powertrain": "EREV",
+      "charge_notes": "20–80% ~12 min claimed (5C peak, press)",
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Flagship-class Mach silicon at mid price; EREV buffer",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "highway-range-buffer",
+        "adas-priority"
+      ]
+    },
+    {
+      "id": "li-auto-l9-ultra",
+      "month": "2026-09",
+      "brand": "Li Auto",
+      "model": "L9",
+      "trim": "Ultra",
+      "msrp_rmb": 459800,
+      "msrp_usd_approx": 67817,
+      "battery_kwh": "72.7",
+      "range_km": "350 EV / 1650 combined (CLTC)",
+      "drive": "AWD EREV",
+      "adas": "Mach Intelligent Driver Assistance (2× Mach M100 cited)",
+      "source_url": "https://data.carnewschina.com/database/ideal-vehicle/li-auto-l9/2026",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "2026MY Ultra guide 459800; Livis 509800 not added. Database recalculated Sept 10 2026.",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ],
+      "powertrain": "EREV",
+      "charge_notes": null,
+      "body_layout": "6-seat SUV",
+      "key_differentiators": "Flagship 6-seat EREV family layout",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "six-seat",
+        "premium",
+        "highway-range-buffer"
+      ]
+    },
+    {
+      "id": "xpeng-g6-625-max-tech",
+      "month": "2026-09",
+      "brand": "XPeng",
+      "model": "G6",
+      "trim": "625 Max Tech",
+      "msrp_rmb": 176800,
+      "msrp_usd_approx": 26077,
+      "battery_kwh": "68.5",
+      "range_km": "625",
+      "drive": "RWD",
+      "adas": "XNGP base; Ultra SE (+12000) / Ultra (+20000) optional packages",
+      "source_url": "https://www.xchuxing.com/article/165092",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "2026MY BEV launch band 17.68–18.68万; battery/range from retail explainers citing official event.",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": null,
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Entry coupe-SUV BEV; ADAS packages à la carte",
+      "decision_tags": [
+        "bev",
+        "value",
+        "city-charge-friendly",
+        "adas-optional"
+      ]
+    },
+    {
+      "id": "xpeng-g6-625-max-flagship",
+      "month": "2026-09",
+      "brand": "XPeng",
+      "model": "G6",
+      "trim": "625 Max Flagship",
+      "msrp_rmb": 186800,
+      "msrp_usd_approx": 27552,
+      "battery_kwh": "68.5",
+      "range_km": "625",
+      "drive": "RWD",
+      "adas": "XNGP; Ultra SE/Ultra optional",
+      "source_url": "https://www.xchuxing.com/article/165092",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Same 2026MY G6 BEV launch table as Tech trim.",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": null,
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Higher content vs Tech at same 625 km band",
+      "decision_tags": [
+        "bev",
+        "value",
+        "city-charge-friendly"
+      ]
+    },
+    {
+      "id": "xpeng-p7-plus-bev-1868",
+      "month": "2026-09",
+      "brand": "XPeng",
+      "model": "P7+",
+      "trim": "BEV entry (186.8k)",
+      "msrp_rmb": 186800,
+      "msrp_usd_approx": 27552,
+      "battery_kwh": null,
+      "range_km": null,
+      "drive": null,
+      "adas": "Ultra SE / Ultra optional (official config)",
+      "source_url": "https://www.xiaopeng.com/p7_plus_2026/configuration.html",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Official 2026 P7+ MSRP band 186800–198800 for BEV and EREV lines; battery/range omitted pending trim-matched public table.",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": null,
+      "body_layout": "5-seat Sedan",
+      "key_differentiators": "Official price floor; dual BEV/EREV lineup",
+      "decision_tags": [
+        "bev",
+        "value"
+      ]
+    },
+    {
+      "id": "leapmotor-c10-erev-entry",
+      "month": "2026-09",
+      "brand": "Leapmotor",
+      "model": "C10",
+      "trim": "EREV entry (2027MY refresh)",
+      "msrp_rmb": 125800,
+      "msrp_usd_approx": 18555,
+      "battery_kwh": null,
+      "range_km": "290 EV / ~1300 combined",
+      "drive": "RWD EREV",
+      "adas": "Leapmotor Pilot; LiDAR trims higher in band",
+      "source_url": "https://cnevpost.com/2026/06/16/leapmotor-refreshes-suv-trio-c10-c11-c16/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Jun 16 2026 C10 band 125800–142800; dual CarNewsChina. Exact Smart/LiDAR trim names vary by retailer tables — entry uses band floor.",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ],
+      "powertrain": "EREV",
+      "charge_notes": "EREV 30–80% ~16 min claimed (CnEVPost)",
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Volume EREV value SUV",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "value",
+        "highway-range-buffer"
+      ]
+    },
+    {
+      "id": "leapmotor-c10-bev-660",
+      "month": "2026-09",
+      "brand": "Leapmotor",
+      "model": "C10",
+      "trim": "BEV 660 (top of band)",
+      "msrp_rmb": 142800,
+      "msrp_usd_approx": 21062,
+      "battery_kwh": null,
+      "range_km": "660",
+      "drive": "RWD",
+      "adas": "LiDAR-equipped configs in high band",
+      "source_url": "https://carnewschina.com/2026/06/17/2027-leapmotor-c10-c11-and-c16-launches-with-more-ranges-starting-at-18500-usd/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Top of C10 125800–142800 band; BEV 660 km / 800V cited. Dual CnEVPost.",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "800V platform on BEV refresh",
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "800V long-range BEV at volume price",
+      "decision_tags": [
+        "bev",
+        "family",
+        "value",
+        "fast-charge"
+      ]
+    },
+    {
+      "id": "aito-m7-erev-pro-plus-5seat",
+      "month": "2026-09",
+      "brand": "AITO",
+      "model": "M7",
+      "trim": "EREV Pro+ 5-seat AWD",
+      "msrp_rmb": 279800,
+      "msrp_usd_approx": 41268,
+      "battery_kwh": null,
+      "range_km": "up to 1625 combined (line claim)",
+      "drive": "AWD EREV",
+      "adas": "Huawei ADS (as marketed)",
+      "source_url": "https://cnevpost.com/2025/09/23/aito-launches-updated-m7-suv/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Sep 23 2025 launch start 279800; CarNewsChina 2026 database still lists 279800–389800 as of Sep 2026. Official config page shows multiple LiDAR/seat matrices — verify trim before buy.",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ],
+      "powertrain": "EREV",
+      "charge_notes": null,
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Huawei ADS family EREV entry",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "adas-priority",
+        "highway-range-buffer"
+      ]
+    },
+    {
+      "id": "aito-m9-max-plus-erev",
+      "month": "2026-09",
+      "brand": "AITO",
+      "model": "M9",
+      "trim": "Max+ EREV (line start)",
+      "msrp_rmb": 479800,
+      "msrp_usd_approx": 70767,
+      "battery_kwh": null,
+      "range_km": null,
+      "drive": "AWD EREV",
+      "adas": "Huawei ADS 5 / multi-LiDAR (as marketed on 2026 refresh)",
+      "source_url": "https://chinaevhome.com/2026/05/27/2026-aito-m9-hits-market-from-69-6k/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "May 27 2026 refresh band 479800–659800; Max+ opens band. Battery/range omitted (trim-dependent across Max+/Ultra/Ultimate).",
+      "tags": [
+        "SUV",
+        "PHEV/EREV"
+      ],
+      "powertrain": "EREV",
+      "charge_notes": null,
+      "body_layout": "5/6-seat large SUV",
+      "key_differentiators": "Large luxury HIMA flagship EREV",
+      "decision_tags": [
+        "erev-phev",
+        "family",
+        "six-seat",
+        "premium",
+        "adas-priority"
+      ]
+    },
+    {
+      "id": "zeekr-001-max-103-rwd",
+      "month": "2026-09",
+      "brand": "Zeekr",
+      "model": "001",
+      "trim": "Max 103 kWh RWD",
+      "msrp_rmb": 269800,
+      "msrp_usd_approx": 39794,
+      "battery_kwh": "103",
+      "range_km": "up to 810 (103 kWh line claim)",
+      "drive": "RWD",
+      "adas": "H7 / Thor-U + LiDAR (as marketed)",
+      "source_url": "https://carnewschina.com/2025/10/11/2026-zeekr-001-arrives-featuring-900-v-architecture-and-lidar-based-h7-system-in-china/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Oct 2025 2026MY launch table; Max 95 AWD and Max 103 RWD both 269800. Database later lists anniversary SKU higher — not used here.",
+      "tags": [
+        "Sedan",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "900V; up to 12C / 10–80% ~7 min claimed on line",
+      "body_layout": "5-seat shooting brake",
+      "key_differentiators": "900V shooting brake + H7 ADAS",
+      "decision_tags": [
+        "bev",
+        "fast-charge",
+        "performance-sedan",
+        "adas-priority"
+      ]
+    },
+    {
+      "id": "zeekr-7x-max-75-rwd",
+      "month": "2026-09",
+      "brand": "Zeekr",
+      "model": "7X",
+      "trim": "Max 75 kWh RWD",
+      "msrp_rmb": 229800,
+      "msrp_usd_approx": 33894,
+      "battery_kwh": "75",
+      "range_km": "620",
+      "drive": "RWD",
+      "adas": "G-Pilot H7 / Thor-U + LiDAR standard (as marketed)",
+      "source_url": "https://carnewschina.com/2025/10/28/2026-zeekr-7x-launched-with-900v-and-dual-motor-2-98s-acceleration-from-31800-usd-in-china/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Oct 28 2025 launch table; CNC database still 229800–269800 as of Sep 2026.",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "900V; 5.5C on 75 kWh / ~10.5 min 10–80% claimed",
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Standard LiDAR mid-SUV at entry price",
+      "decision_tags": [
+        "bev",
+        "family",
+        "adas-priority",
+        "fast-charge"
+      ]
+    },
+    {
+      "id": "zeekr-7x-ultra-103-awd",
+      "month": "2026-09",
+      "brand": "Zeekr",
+      "model": "7X",
+      "trim": "Ultra 103 kWh AWD",
+      "msrp_rmb": 269800,
+      "msrp_usd_approx": 39794,
+      "battery_kwh": "103",
+      "range_km": "715",
+      "drive": "AWD",
+      "adas": "G-Pilot H7 / Thor-U + LiDAR; air suspension on Ultra",
+      "source_url": "https://carnewschina.com/2025/10/28/2026-zeekr-7x-launched-with-900v-and-dual-motor-2-98s-acceleration-from-31800-usd-in-china/",
+      "accessed_utc": "2026-09-10T13:02:00Z",
+      "notes": "Launch table Ultra AWD 269800; dual-checked CNC database high end.",
+      "tags": [
+        "SUV",
+        "BEV"
+      ],
+      "powertrain": "BEV",
+      "charge_notes": "900V; 6C on 103 kWh claimed",
+      "body_layout": "5-seat SUV",
+      "key_differentiators": "Dual-motor Ultra + air suspension",
+      "decision_tags": [
+        "bev",
+        "family",
+        "awd",
+        "adas-priority",
+        "fast-charge"
       ]
     }
   ]
